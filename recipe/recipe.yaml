@@ -29,7 +29,6 @@ build:
 requirements:
   build:
     - "${{ compiler('c') }}"
-    - "${{ stdlib('c') }}"
     - "${{ compiler('cxx') }}"
     - if: unix
       then: make
@@ -54,7 +53,9 @@ about:
     - COPYING
   summary: Valkey client library in C
   description: |
-    Libvalkey is the official C client for the [Valkey](https://valkey.io) database. It also supports any server that uses the `RESP` protocol (version 2 or 3). This project supports both standalone and cluster modes.
+    Libvalkey is the official C client for the [Valkey](https://valkey.io) database.
+    It also supports any server that uses the `RESP` protocol (version 2 or 3).
+    This project supports both standalone and cluster modes.
   homepage: https://github.com/valkey-io/libvalkey
   repository: https://github.com/valkey-io/libvalkey
 
