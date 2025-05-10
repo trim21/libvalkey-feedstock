@@ -21,8 +21,11 @@ build:
     content:
       - if: linux
         then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 .
-        else: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
-      - ninja install
+      - if: osx
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
+      - if: win
+        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% %SRC_DIR%'
+      - ninja -v install
 
 requirements:
   build:
