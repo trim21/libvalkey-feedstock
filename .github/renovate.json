@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>trim21/renovate-config",
+    "local>trim21/renovate-config:app"
+  ],
+  "customManagers": [
+    {
+      "customType": "jsonata",
+      "managerFilePatterns": [
+        "recipe/recipe.yaml"
+      ],
+      "fileFormat": "yaml",
+      "matchStrings": [
+        "[{'currentValue': context.version}]"
+      ],
+      "packageNameTemplate": "valkey-io/libvalkey",
+      "datasourceTemplate": "github-tags"
+    }
+  ]
+}
