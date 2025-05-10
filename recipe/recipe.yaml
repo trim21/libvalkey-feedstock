@@ -15,6 +15,7 @@ source:
   sha256: "118e4cf50daf32645d267740f431e81c91bc85f332ea14a8051ddab59bba79c5"
 
 build:
+  number: 1
   script:
     env:
       CMAKE_GENERATOR: "Ninja"
@@ -35,7 +36,6 @@ requirements:
 
   host:
     - openssl>=3
-    - libevent
     - if: linux
       then: rdma-core
 
