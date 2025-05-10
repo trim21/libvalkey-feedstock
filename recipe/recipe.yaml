@@ -20,12 +20,12 @@ build:
       CMAKE_GENERATOR: "Ninja"
     content:
       - if: linux
-        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 .
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
       - if: osx
-        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -B build .
       - if: win
-        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% %SRC_DIR%'
-      - ninja -v install
+        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -B build %SRC_DIR%'
+      - ninja -C build -v install
 
 requirements:
   build:
