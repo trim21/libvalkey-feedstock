@@ -19,11 +19,9 @@ build:
     env:
       CMAKE_GENERATOR: "Ninja"
     content:
-      - mkdir build
-      - popd build
       - if: linux
-        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 ..
-        else: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 ..
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 .
+        else: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
       - ninja -v install
 
 requirements:
