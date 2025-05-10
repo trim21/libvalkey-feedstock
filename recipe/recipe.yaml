@@ -32,8 +32,6 @@ requirements:
     - "${{ compiler('c') }}"
     - ninja
     - cmake
-    - if: win
-      then: "${{ compiler('cxx') }}"
 
   host:
     - openssl>=3
