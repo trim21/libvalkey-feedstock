@@ -41,8 +41,13 @@ requirements:
 
 tests:
   - script:
-      - test -f ${{ env.get('PREFIX') }}/include/valkey/valkey.h
-      - test -f ${{ env.get('PREFIX') }}/lib/libvalkey${{ env.get('SHLIB_EXT') }}
+      if: win
+      then:
+        - test -f %PREFIX%/include/valkey/valkey.h
+        - test -f %PREFIX%/lib/libvalkey%SHLIB_EXT%
+      else:
+        - test -f ${PREFIX}/include/valkey/valkey.h
+        - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
 
 about:
   license: MIT
