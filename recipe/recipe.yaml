@@ -19,17 +19,16 @@ build:
   script:
     env:
       CMAKE_GENERATOR: "Ninja"
+    interpreter: nu
     content:
       - if: linux
         then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
-      - if: osx
-        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -B build .
-      - if: win
-        then: "cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -B build %SRC_DIR%"
+        else: cmake -DCMAKE_INSTALL_PREFIX=${LIBRARY_PREFIX} -DENABLE_TLS=1 -B build .
       - ninja -C build -v install
 
 requirements:
   build:
+    - nushell
     - "${{ compiler('c') }}"
     - ninja
     - cmake
