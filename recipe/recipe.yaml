@@ -17,11 +17,11 @@ build:
   script:
     content:
       - if: linux
-        then: cmake $CMAKE_ARGS -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -S $SRC_DIR
+        then: cmake -S $SRC_DIR  $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1
       - if: osx
-        then: cmake $CMAKE_ARGS -D ENABLE_TLS=1 -S $SRC_DIR
+        then: cmake -S $SRC_DIR  $CMAKE_ARGS  -D ENABLE_TLS=1
       - if: win
-        then: cmake %CMAKE_ARGS% -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -D ENABLE_TLS=1 -S %SRC_DIR%
+        then: cmake -S %SRC_DIR% %CMAKE_ARGS% -D ENABLE_TLS=1
 
       - cmake --build . --config Release
       - cmake --install .
