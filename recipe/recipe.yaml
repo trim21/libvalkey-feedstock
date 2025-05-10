@@ -40,7 +40,7 @@ requirements:
       then: rdma-core
 
 tests:
-  - scripts:
+  - script:
       - test -f ${PREFIX}/include/valkey/valkey.h
       - test -f ${PREFIX}/lib/valkeyd.${{ SHLIB_EXT }}
 
