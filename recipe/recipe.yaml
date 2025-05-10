@@ -40,12 +40,11 @@ requirements:
       then: rdma-core
 
 tests:
-  - requirements:
-      run:
-        - nushell
-    script:
-      - nu -c 'test -f ($env.PREFIX)/include/valkey/valkey.h'
-      - nu -c 'test -f ($env.PREFIX)/lib/libvalkey($env.SHLIB_EXT)'
+  - script:
+      - if: unix
+        then:
+          - test -f ${PREFIX}/include/valkey/valkey.h
+          - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
 
 about:
   license: MIT
