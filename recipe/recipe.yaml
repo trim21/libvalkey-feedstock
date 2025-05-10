@@ -41,8 +41,10 @@ requirements:
 
 tests:
   - script:
-      - test -f ${PREFIX}/include/valkey/valkey.h
-      - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
+      if: unix
+      then:
+        - test -f ${PREFIX}/include/valkey/valkey.h
+        - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
 
 about:
   license: MIT
