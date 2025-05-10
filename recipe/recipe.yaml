@@ -18,15 +18,13 @@ build:
   script:
     env:
       CMAKE_GENERATOR: "Ninja"
-    interpreter: bash
     content:
       - if: linux
         then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 .
-        else: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
-      # - if: osx
-        # then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
-      # - if: win
-        # then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% %SRC_DIR%'
+      - if: osx
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 .
+      - if: win
+        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% %SRC_DIR%'
       - ninja -v install
 
 requirements:
