@@ -16,15 +16,17 @@ build:
   number: 2
   script:
     content:
-      - if: linux
-        then: cmake -S $SRC_DIR  $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1
-      - if: osx
-        then: cmake -S $SRC_DIR  $CMAKE_ARGS  -D ENABLE_TLS=1
-      - if: win
-        then: cmake -S %SRC_DIR% %CMAKE_ARGS% -D ENABLE_TLS=1
+      - mkdir -p build
+      - cd build
 
-      - cmake --build . --config Release
-      - cmake --install .
+      - if: linux
+        then: cmake .. $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1
+      - if: osx
+        then: cmake .. $CMAKE_ARGS  -D ENABLE_TLS=1
+      - if: win
+        then: cmake .. %CMAKE_ARGS% -D ENABLE_TLS=1
+
+      - cmake --build . --target install --config Release
 
 requirements:
   build:
