@@ -40,14 +40,12 @@ requirements:
       then: rdma-core
 
 tests:
-  - script:
-      - if: win
-        then:
-          - test -f %PREFIX%/include/valkey/valkey.h
-          - test -f %PREFIX%/lib/libvalkey%SHLIB_EXT%
-        else:
-          - test -f ${PREFIX}/include/valkey/valkey.h
-          - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
+  - requirements:
+      - nushell
+    interpreter: nu
+    script:
+      - test -f ${PREFIX}/include/valkey/valkey.h
+      - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
 
 about:
   license: MIT
