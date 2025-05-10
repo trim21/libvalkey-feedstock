@@ -15,7 +15,7 @@ source:
   sha256: "118e4cf50daf32645d267740f431e81c91bc85f332ea14a8051ddab59bba79c5"
 
 build:
-  number: 1
+  number: 2
   script:
     env:
       CMAKE_GENERATOR: "Ninja"
@@ -25,7 +25,7 @@ build:
       - if: osx
         then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -B build .
       - if: win
-        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -B build %SRC_DIR%'
+        then: "cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -B build %SRC_DIR%"
       - ninja -C build -v install
 
 requirements:
@@ -38,6 +38,11 @@ requirements:
     - openssl>=3
     - if: linux
       then: rdma-core
+
+tests:
+  - scripts:
+      - test -f ${PREFIX}/include/valkey/valkey.h
+      - test -f ${PREFIX}/lib/valkeyd.${{ SHLIB_EXT }}
 
 about:
   license: MIT
