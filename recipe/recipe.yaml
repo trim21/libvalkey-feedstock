@@ -43,8 +43,6 @@ tests:
   - requirements:
       run:
         - nushell
-
-    interpreter: nu
     script:
       - nu -c 'test -f ${PREFIX}/include/valkey/valkey.h'
       - nu -c 'test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}'
