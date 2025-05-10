@@ -24,7 +24,7 @@ build:
       - if: linux
         then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 ..
         else: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 ..
-      - ninja install
+      - ninja -v install
 
 requirements:
   build:
