@@ -22,8 +22,8 @@ build:
     interpreter: nu
     content:
       - if: linux
-        then: cmake -DCMAKE_PREFIX=${env.CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
-        else: cmake -DCMAKE_INSTALL_PREFIX=${env.LIBRARY_PREFIX} -DENABLE_TLS=1 -B build .
+        then: cmake -DCMAKE_PREFIX=($env.CMAKE_ARGS) -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
+        else: cmake -DCMAKE_INSTALL_PREFIX=($env.LIBRARY_PREFIX) -DENABLE_TLS=1 -B build .
       - ninja -C build -v install
 
 requirements:
