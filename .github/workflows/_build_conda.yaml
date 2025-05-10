@@ -27,10 +27,8 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         shell: bash
 
-      - uses: TheMrMilchmann/setup-msvc-dev@v3
+      - uses: ilammy/msvc-dev-cmd@v1.13.0
         if: ${{ runner.os == 'Windows' }}
-        with:
-          arch: x64
 
       - run: >-
           rattler-build build
