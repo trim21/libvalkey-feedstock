@@ -17,14 +17,15 @@ source:
 build:
   number: 2
   script:
-    env:
-      CMAKE_GENERATOR: "Ninja"
-    interpreter: nu
     content:
       - if: linux
-        then: cmake -DCMAKE_PREFIX=($env.CMAKE_ARGS) -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
-        else: cmake -DCMAKE_INSTALL_PREFIX=($env.LIBRARY_PREFIX) -DENABLE_TLS=1 -B build .
-      - ninja -C build -v install
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
+      - if: osx
+        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -B build .
+      - if: win
+        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -B build %SRC_DIR%'
+      - cmake --build build
+      - cmake --install build
 
 requirements:
   build:
