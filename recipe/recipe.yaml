@@ -18,17 +18,14 @@ build:
   number: 2
   script:
     content:
-      - mkdir -p build
-      - cd build
-
       - if: linux
-        then: cmake .. $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1
+        then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
       - if: osx
-        then: cmake .. $CMAKE_ARGS  -D ENABLE_TLS=1
+        then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -G Ninja
       - if: win
-        then: cmake .. %CMAKE_ARGS% -D ENABLE_TLS=1 -G Ninja
+        then: cmake . -B build %CMAKE_ARGS% -D ENABLE_TLS=1 -G Ninja
 
-      - cmake --build . --target install --config Release
+      - ninja -v -C build install
 
 requirements:
   build:
@@ -47,11 +44,14 @@ requirements:
       then: rdma-core
 
 tests:
-  - script:
-      - if: unix
-        then:
-          - test -f ${PREFIX}/include/valkey/valkey.h
-          - test -f ${PREFIX}/lib/libvalkey${SHLIB_EXT}
+  - package_contents:
+      files:
+        - '**/valkey_tls/valkey_tls-targets.cmake'
+      lib:
+        - valkey
+        - valkey_tls
+      include:
+        - valkey/valkey.h
 
 about:
   license: MIT
