@@ -1,5 +1,3 @@
-# yaml-language-server: $schema=https://cdn.jsdelivr.net/gh/prefix-dev/recipe-format/schema.json
-
 schema_version: 1
 
 context:
@@ -13,31 +11,47 @@ package:
 source:
   url: https://github.com/valkey-io/libvalkey/archive/refs/tags/${{ version }}.zip
   sha256: "118e4cf50daf32645d267740f431e81c91bc85f332ea14a8051ddab59bba79c5"
+  patches:
+    - patches/0000-tls.patch
 
 build:
-  number: 1
+  number: 2
   script:
-    env:
-      CMAKE_GENERATOR: "Ninja"
     content:
       - if: linux
-        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -DENABLE_RDMA=1 -B build .
+        then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
       - if: osx
-        then: cmake ${CMAKE_ARGS} -DENABLE_TLS=1 -B build .
+        then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -G Ninja
       - if: win
-        then: 'cmake -DCMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% -B build %SRC_DIR%'
-      - ninja -C build -v install
+        then: cmake . -B build %CMAKE_ARGS% -D ENABLE_TLS=1 -G Ninja
+
+      - ninja -v -C build install
 
 requirements:
   build:
     - "${{ compiler('c') }}"
-    - ninja
+    - "${{ compiler('cxx') }}"
+    - if: unix
+      then: make
     - cmake
+    - ninja
+    - pkg-config
 
   host:
-    - openssl>=3
+    - openssl >=3
+    - glib >=2,<3a0
     - if: linux
       then: rdma-core
+
+tests:
+  - package_contents:
+      files:
+        - '**/valkey_tls/valkey_tls-targets.cmake'
+      lib:
+        - valkey
+        - valkey_tls
+      include:
+        - valkey/valkey.h
 
 about:
   license: MIT
@@ -45,7 +59,12 @@ about:
     - COPYING
   summary: Valkey client library in C
   description: |
-    this package is build from
-    [https://github.com/trim21/libvalkey-feedstock](https://github.com/trim21/libvalkey-feedstock)
+    Libvalkey is the official C client for the [Valkey](https://valkey.io) database.
+    It also supports any server that uses the `RESP` protocol (version 2 or 3).
+    This project supports both standalone and cluster modes.
   homepage: https://github.com/valkey-io/libvalkey
   repository: https://github.com/valkey-io/libvalkey
+
+extra:
+  recipe-maintainers:
+    - trim21
