@@ -17,7 +17,6 @@ source:
 build:
   number: 3
   script:
-    interpreter: bash
     content:
       - if: linux
         then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
