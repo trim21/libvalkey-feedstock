@@ -15,15 +15,12 @@ source:
     - patches/0000-tls.patch
 
 build:
-  number: 2
+  number: 3
   script:
     content:
       - if: linux
         then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
-      - if: osx
-        then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -G Ninja
-      - if: win
-        then: cmake . -B build %CMAKE_ARGS% -D ENABLE_TLS=1 -G Ninja
+        else: bash -c 'cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -G Ninja'
 
       - ninja -v -C build install
 
@@ -32,8 +29,6 @@ requirements:
     - ${{ pin_subpackage('libvalkey', upper_bound='x.x.x') }}
   build:
     - "${{ compiler('c') }}"
-    - if: unix
-      then: make
     - cmake
     - ninja
     - pkg-config
@@ -47,7 +42,7 @@ requirements:
 tests:
   - package_contents:
       files:
-        - '**/valkey_tls/valkey_tls-targets.cmake'
+        - "**/valkey_tls/valkey_tls-targets.cmake"
       lib:
         - valkey
         - valkey_tls
