@@ -15,7 +15,7 @@ source:
     - patches/0000-tls.patch
 
 build:
-  number: 2
+  number: 3
   script:
     interpreter: bash
     content:
