@@ -17,18 +17,14 @@ source:
 build:
   number: 3
   script:
-    content:
-      - if: linux
-        then: cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
-        else: bash -c 'cmake . -B build $CMAKE_ARGS  -D ENABLE_TLS=1 -G Ninja'
-
-      - ninja -v -C build install
+    interpreter: python
+    file: 'build.py'
 
 requirements:
   run_exports:
     - ${{ pin_subpackage('libvalkey', upper_bound='x.x.x') }}
   build:
-    - "${{ compiler('c') }}"
+    - clang
     - cmake
     - ninja
     - pkg-config
