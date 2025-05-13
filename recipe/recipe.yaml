@@ -15,7 +15,7 @@ source:
     - patches/0000-tls.patch
 
 build:
-  number: 3
+  number: 4
   script:
     interpreter: python
     file: 'build.py'
