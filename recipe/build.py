@@ -3,6 +3,7 @@ import os
 import sys
 import subprocess
 import json
+from pathlib import Path
 
 print(json.dumps(dict(os.environ), ensure_ascii=False, indent=2, sort_keys=True))
 
@@ -17,5 +18,7 @@ subprocess.check_call(
         '-B', 'build',
     ]
 )
+
+print(Path('build/cmake_install.cmake').read_text('utf-8'))
 
 subprocess.check_call(["ninja", '-v', '-C', 'build', 'install'])
