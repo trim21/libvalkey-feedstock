@@ -17,13 +17,12 @@ source:
 build:
   number: 4
   script:
-    interpreter: nu
     content:
       - bash -c 'echo $CMAKE_ARGS'
 
       - if: linux
-        then: cmake . -B build ...($env.CMAKE_ARGS |split row ' ')  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
-        else: cmake . -B build ...($env.CMAKE_ARGS |split row ' ')  -D ENABLE_TLS=1 -G Ninja
+        then: cmake . -B build ${{ env('CMAKE_ARGS') }}  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
+        else: cmake . -B build ${{ env('CMAKE_ARGS') }}  -D ENABLE_TLS=1 -G Ninja
 
       - ninja -v -C build install
 
@@ -31,7 +30,6 @@ requirements:
   run_exports:
     - ${{ pin_subpackage('libvalkey', upper_bound='x.x.x') }}
   build:
-    - nushell
     - "${{ compiler('c') }}"
     - cmake<4
     - ninja
