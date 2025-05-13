@@ -14,4 +14,4 @@ subprocess.check_call(
     ]
 )
 
-subprocess.check_call(["ninja", '-v', '-c', 'build', 'install'])
+subprocess.check_call(["ninja", '-v', '-C', 'build', 'install'])
