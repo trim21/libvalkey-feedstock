@@ -33,7 +33,7 @@ requirements:
   build:
     - nushell
     - "${{ compiler('c') }}"
-    - cmake
+    - cmake<4
     - ninja
     - pkg-config
 
