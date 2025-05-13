@@ -19,7 +19,7 @@ build:
   script:
     interpreter: nu
     content:
-      - echo "'" $env.CMAKE_ARGS "'"
+      - bash -c 'echo $CMAKE_ARGS'
 
       - if: linux
         then: cmake . -B build ...($env.CMAKE_ARGS |split words)  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
