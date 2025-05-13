@@ -20,8 +20,8 @@ build:
     interpreter: nu
     content:
       - if: linux
-        then: cmake . -B build ...$CMAKE_ARGS  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
-        else: bash -c 'cmake . -B build ...$CMAKE_ARGS  -D ENABLE_TLS=1 -G Ninja'
+        then: cmake . -B build ...($CMAKE_ARGS | split column " ")  -D ENABLE_TLS=1 -D ENABLE_RDMA=1 -G Ninja
+        else: bash -c 'cmake . -B build ...($CMAKE_ARGS | split column " ")  -D ENABLE_TLS=1 -G Ninja'
 
       - ninja -v -C build install
 
