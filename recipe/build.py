@@ -11,6 +11,7 @@ subprocess.check_call(
         *(['-D', 'ENABLE_RDMA=1'] if sys.platform == 'linux' else []),
         '-G', 'Ninja',
         '.',
+        '-B', 'build',
     ]
 )
 
