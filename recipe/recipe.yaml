@@ -24,7 +24,7 @@ requirements:
   run_exports:
     - ${{ pin_subpackage('libvalkey', upper_bound='x.x.x') }}
   build:
-    - clang
+    - "${{ compiler('c') }}"
     - cmake
     - ninja
     - pkg-config
