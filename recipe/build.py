@@ -6,14 +6,14 @@ import json
 from pathlib import Path
 
 print(json.dumps(os.environ["CMAKE_ARGS"], ensure_ascii=False, indent=2, sort_keys=True))
-print(json.dumps(shlex.split(os.environ["CMAKE_ARGS"], posix=sys.platform == 'posix'),
+print(json.dumps(shlex.split(os.environ["CMAKE_ARGS"], posix=os.name == 'posix'),
                  ensure_ascii=False, indent=2,
                  sort_keys=True))
 
 subprocess.check_call(
     [
         "cmake",
-        *shlex.split(os.environ["CMAKE_ARGS"], posix=sys.platform == 'posix'),
+        *shlex.split(os.environ["CMAKE_ARGS"], posix=os.name == 'posix'),
         '-D', 'ENABLE_TLS=1',
         *(['-D', 'ENABLE_RDMA=1'] if sys.platform == 'linux' else []),
         '-G', 'Ninja',
