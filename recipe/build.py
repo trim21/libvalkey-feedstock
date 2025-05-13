@@ -2,6 +2,9 @@ import shlex
 import os
 import sys
 import subprocess
+import json
+
+print(json.dumps(dict(os.environ), ensure_ascii=False, indent=2, sort_keys=True))
 
 subprocess.check_call(
     [
