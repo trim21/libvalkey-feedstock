@@ -16,7 +16,7 @@ source:
     - patches/0000-tls.patch
 
 build:
-  number: 0
+  number: 1
   script:
     content:
       - if: linux
